@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/treestructure/complexstructure.iml" filepath="$PROJECT_DIR$/treestructure/complexstructure.iml" />
+      <module fileurl="file://$PROJECT_DIR$/datastructure.iml" filepath="$PROJECT_DIR$/datastructure.iml" />
+      <module fileurl="file://$PROJECT_DIR$/linearstructure/linearstructure.iml" filepath="$PROJECT_DIR$/linearstructure/linearstructure.iml" />
+    </modules>
+  </component>
+</project>
