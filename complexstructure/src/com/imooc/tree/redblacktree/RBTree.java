@@ -9,7 +9,7 @@ import java.util.LinkedList;
  */
 public class RBTree<E extends Comparable<E>> {
     private class Node{
-        public static final boolean RED = true;
+        public static final boolean RED = false;
         public static final boolean BLACK = true;
         public E e;
         public Node left, right;
@@ -129,7 +129,7 @@ public class RBTree<E extends Comparable<E>> {
         for (int i = 0; i < depth; i++) {
             stringBuilder.append("--");
         }
-        stringBuilder.append(node.e + "\n");
+        stringBuilder.append(node.e + ":" + node.color + "\n");
         print(node.left, depth + 1, stringBuilder);
         print(node.right, depth + 1, stringBuilder);
     }
