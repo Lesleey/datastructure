@@ -74,6 +74,13 @@ public class Matrix {
     public void isValid(int v){
         if(v < 0 || v >= vertex) throw new IllegalArgumentException("顶点参数不合法");
     }
+
+    public void removeEdge(int v, int w ){
+         isValid(v);
+         isValid(w);
+         matrix[v][w] = 0;
+         matrix[w][v] = 0;
+    }
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
