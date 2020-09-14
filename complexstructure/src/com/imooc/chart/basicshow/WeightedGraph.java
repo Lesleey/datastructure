@@ -7,41 +7,38 @@ import java.util.*;
 /**
  * @author Lesleey
  * @date 2020/5/31-17:13
- * @function 使用邻接表表示无向无权图
- *  空间复杂度 O(V + E)
- *  时间复杂度 建图 O(E * V) 查看两点是否相邻 O(degree(v))  求一个点的相邻节点 O(degree(v))
- *  邻接表的缺点主要在建图（查重） 和 查看两点是否连接，必须遍历链表，改进：不使用链表，使用红黑树(treeSet)或者哈希表（hashSet）
- *  尽量使用红黑树，因为它会保持节点编号有序，这对之后的算法有利
+ * @function 使用邻接表表示无向带权图
  */
-public class GraphList {
+public class WeightedGraph {
     //顶点数量
     private int vertex;
     //边的数量
     private int edge;
-    //表示图的连接表
-    private TreeSet<Integer>[] list;
+    //表示图的连接表 | 相邻的顶点： 权值
+    private TreeMap<Integer, Integer>[] list;
 
-    public GraphList(String fileName){
+    public WeightedGraph(String fileName){
         File file = new File(fileName);
         try (Scanner scanner = new Scanner(file);){
             this.vertex = scanner.nextInt();
             this.edge = scanner.nextInt();
 
             if(vertex <0 || edge < 0) throw  new IllegalArgumentException("参数异常！！");
-            list = new TreeSet[vertex];
+            list = new TreeMap[vertex];
             for (int i = 0; i < vertex; i++) {
-                list[i] = new TreeSet<>();
+                list[i] = new TreeMap<>();
             }
 
             for (int i = 0; i < edge; i++) {
                 int a = scanner.nextInt();
                 int b = scanner.nextInt();
+                int weight = scanner.nextInt();
                 isValid(a);
                 isValid(b);
                 if(a == b) throw new IllegalArgumentException("不支持自环边");
-                if(list[a].contains(b)) throw new IllegalArgumentException("不支持平行边");
-                list[a].add(b);
-                list[b].add(a);
+                if(list[a].containsKey(b)) throw new IllegalArgumentException("不支持平行边");
+                list[a].put(b, weight);
+                list[b].put(a, weight);
             }
 
         } catch (FileNotFoundException e) {
@@ -51,9 +48,9 @@ public class GraphList {
 
 
     //寻找与 v相连的顶点
-    public TreeSet<Integer> connectVertex(int v){
+    public Set<Integer> connectVertex(int v){
         isValid(v);
-        return list[v];
+        return list[v].keySet();
     }
 
     //获取该顶点的度
@@ -64,7 +61,12 @@ public class GraphList {
     public boolean isExistEdge(int v, int w){
         isValid(v);
         isValid(w);
-        return list[v].contains(w);
+        return list[v].containsKey(w);
+    }
+
+    public Integer getWeight(int v, int w){
+        isValid(v);
+        return list[v].get(w);
     }
 
     public int getVertex() {
@@ -85,14 +87,16 @@ public class GraphList {
         stringBuilder.append(String.format("顶点个数%d, 边的个数%d,\n", vertex, edge));
         for (int i = 0; i < vertex; i++) {
             stringBuilder.append(String.format("%d:", i));
-            stringBuilder.append(Arrays.toString(list[i].toArray()) + '\n');
+            for (Map.Entry<Integer, Integer> entry: list[i].entrySet())
+                   stringBuilder.append("(" + entry.getKey() + ":" + entry.getValue() + ")");
+            stringBuilder.append('\n');
 
         }
         return stringBuilder.toString();
     }
 
     public static void main(String[] args) {
-        GraphList matrix = new GraphList("complexstructure/src/com/imooc/chart/graph.txt");
+        WeightedGraph matrix = new WeightedGraph("complexstructure/src/com/imooc/chart/weightgraph.txt");
         System.out.println(matrix);
     }
 }
