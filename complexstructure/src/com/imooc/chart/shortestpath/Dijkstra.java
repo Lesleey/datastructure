@@ -1,6 +1,5 @@
 package com.imooc.chart.shortestpath;
 
-import com.imooc.chart.basicshow.Matrix;
 import com.imooc.chart.basicshow.WeightMatrix;
 
 import java.util.*;

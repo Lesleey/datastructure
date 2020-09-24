@@ -20,8 +20,14 @@ public class WeightMatrix {
     private int edge;
     //表示图的连接矩阵
     private int[][] matrix;
+    //是否是有向图
+    private boolean isDirection;
 
     public WeightMatrix(String fileName){
+        this(fileName, false);
+    }
+    public WeightMatrix(String fileName, boolean isDirection){
+        this.isDirection = isDirection;
         File file = new File(fileName);
         try (Scanner scanner = new Scanner(file);){
             this.vertex = scanner.nextInt();
@@ -38,7 +44,10 @@ public class WeightMatrix {
                 int weight = scanner.nextInt();
                 if(a == b) throw new IllegalArgumentException("不支持自环边");
                 if(matrix[a][b] != 0) throw new IllegalArgumentException("不支持平行边");
-                matrix[a][b] = matrix[b][a] = weight;
+                matrix[a][b]  = weight;
+                if(!isDirection ){
+                    matrix[b][a] = weight;
+                }
             }
 
         } catch (FileNotFoundException e) {
@@ -86,12 +95,13 @@ public class WeightMatrix {
          isValid(v);
          isValid(w);
          matrix[v][w] = 0;
-         matrix[w][v] = 0;
+         if(!isDirection)
+             matrix[w][v] = 0;
     }
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(String.format("顶点个数%d, 边的个数%d,\n", vertex, edge));
+        stringBuilder.append(String.format("顶点个数%d, 边的个数%d, isDirection= %b\n", vertex, edge, isDirection));
         for (int i = 0; i < vertex; i++) {
             for (int j = 0; j < vertex; j++) {
                 stringBuilder.append(matrix[i][j] + " ");
@@ -102,7 +112,7 @@ public class WeightMatrix {
     }
 
     public static void main(String[] args) {
-        WeightMatrix matrix = new WeightMatrix("complexstructure/src/com/imooc/chart/graph.txt");
+        WeightMatrix matrix = new WeightMatrix("complexstructure/src/com/imooc/chart/weightgraph.txt", true);
         System.out.println(matrix);
     }
 }

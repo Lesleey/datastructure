@@ -55,7 +55,7 @@ public class EulerLoopFind {
         stack.push(root);
         int curV = root;
         while(! stack.isEmpty()){
-            if(matrix.degreeVertex(curV) > 0){
+            if(matrix.outDegree(curV) > 0){
                 Integer next = matrix.connectVertex(curV).iterator().next();
                 matrix.removeEdge(curV, next);
                 curV = next;

@@ -24,7 +24,7 @@ public class UnionFindOne implements  UnionFindSet {
      * */
     @Override
     public void union(int p, int q) {
-        int qListNo = find(p);
+        int qListNo = find(q);
         int pListNo = find(p);
         if(pListNo == qListNo) return;
         for (int i = 0; i < data.length; i++) {

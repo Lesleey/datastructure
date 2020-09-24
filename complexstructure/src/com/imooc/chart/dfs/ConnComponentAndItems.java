@@ -51,7 +51,7 @@ public class ConnComponentAndItems {
         if(isVisited[root] != 0) return;
         isVisited[root] = curlevel;
         for (Integer son : matrix.connectVertex(root)) {
-            if(isVisited[root] != 0) continue;
+            if(isVisited[son] != 0) continue;
             dfsRecursionMatrix(matrix, son, isVisited, curlevel);
         }
     }

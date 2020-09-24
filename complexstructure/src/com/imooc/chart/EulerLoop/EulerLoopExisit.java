@@ -10,23 +10,30 @@ import com.imooc.chart.basicshow.Matrix;
  *    每个点的相连边数（即每个点的度）必须是偶数。
  *    对于无向连通图，充分必要条件： 每个点的度是偶数 《==》 图存在欧拉回路
  *        对于度为偶数的点肯定存在一个环， 欧拉回路实际上就是多个相连的环
+ *    对于有向连通图, 充分必要条件： 每个点的入度等于出度 《==》 图中存在欧拉回路
+ *
+ *    欧拉路径：
+ *      对于无向连通图的充分必要条件： 除了两个点的度数为奇数， 其余每个点的度数为偶数
+ *      对于有向连通图的充分必要条件： 除了两个点，其余点的入度等于出度， 这两个点，一个入度比出度大一，一个入度比出度小一
  */
 public class EulerLoopExisit {
 
     public static boolean hasEulerLoop(Matrix matrix){
         int vertex = matrix.getVertex();
         boolean[] isVisited = new boolean[vertex];
-        int res = 0;
+/*        int res = 0;
         for (int i = 0; i < vertex; i++) {
             if(! isVisited[i]){
                 dfsRecursionMatrix(matrix, i, isVisited);
                 res ++;
             }
-        }
+        }*/
         for (int i = 0; i < matrix.getVertex(); i++) {
-            if(matrix.degreeVertex(i) % 2 != 0) return false;
+            if(!matrix.isDirection() && matrix.degreeVertex(i) % 2 != 0) return false;
+            if(matrix.isDirection() && matrix.outDegree(i) != matrix.inDegree(i) ) return false;
         }
-       return res <= 1;
+        return true;
+      /* return res <= 1;*/
     }
 
     /**

@@ -1,11 +1,6 @@
 package com.imooc.chart.dfs;
 
-import com.imooc.chart.basicshow.GraphList;
 import com.imooc.chart.basicshow.Matrix;
-
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  * @author Lesleey
